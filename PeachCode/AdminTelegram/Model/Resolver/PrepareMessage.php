@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace PeachCode\AdminTelegram\Model\Resolver;
 
+use Magento\Quote\Model\Quote\Item;
 use PeachCode\AdminTelegram\Api\ConfigInterface;
 use PeachCode\AdminTelegram\Api\Resolver\PrepareMessageInterface;
 
@@ -17,12 +18,12 @@ class PrepareMessage implements PrepareMessageInterface{
 
     /**
      * @param $items
-     * @param $customerName
-     * @param $finalPrice
-     * @param $chatId
+     * @param string $customerName
+     * @param float $finalPrice
+     * @param string $chatId
      * @return array
      */
-    public function resolve($items, $customerName, $finalPrice, $chatId): array
+    public function resolve($items, string $customerName, float $finalPrice, string $chatId): array
     {
         $itemsData = '';
 

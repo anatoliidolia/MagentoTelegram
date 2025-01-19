@@ -5,6 +5,8 @@
             <general>
                 <telegram_integration>0</telegram_integration>
                 <telegram_api_token>Example</telegram_api_token>
+                <telegram_template>Hi {customer_name}, you order({incrementId}) updated to {status} status.</telegram_template>
+                <telegram_items_template>Items: Name: {name},Price: {price}</telegram_items_template>
             </general>
         </telegram_customer_links>
     </default>

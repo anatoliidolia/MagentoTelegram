@@ -46,7 +46,8 @@ class DataSender implements DataSenderInterface{
         $data = $this->prepareMessage->resolve(
             $allItems,
             $quote->getCustomerFirstname(),
-            $quote->getBaseSubtotal(), $chatId
+            (float)$quote->getBaseSubtotal(),
+            $chatId
         );
 
         try {

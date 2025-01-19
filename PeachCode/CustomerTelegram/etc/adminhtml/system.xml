@@ -4,7 +4,7 @@
         <tab id="telegram" translate="label" sortOrder="900">
             <label>Telegram</label>
         </tab>
-        <section id="telegram_customer_links" translate="label" sortOrder="130" showInDefault="1" showInWebsite="1" showInStore="1">
+        <section id="telegram_customer_links" translate="label" sortOrder="130" showInDefault="1" showInWebsite="1" showInStore="0">
             <class>separator-top</class>
             <label>Customer Notification</label>
             <tab>telegram</tab>
@@ -12,15 +12,27 @@
             <group id="general" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
                 <label>Telegram Integration</label>
                 <field id="telegram_integration" translate="label" type="select" sortOrder="0" showInDefault="1"
-                       showInWebsite="1" showInStore="1" canRestore="1">
+                       showInWebsite="1" showInStore="0" canRestore="1">
                     <label>Enable Telegram Customer Integration</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
                 <field id="telegram_api_token" translate="label" type="text" sortOrder="10" showInDefault="1"
-                       showInWebsite="1" showInStore="1" canRestore="1">
+                       showInWebsite="1" showInStore="0" canRestore="1">
                     <label>Telegram API Token</label>
                     <validate>required-entry</validate>
                     <comment>Example: 5012344222:AREiD_eD1PR70akx6SYPFiVkMbi6sf5Orc4</comment>
+                </field>
+                <field id="telegram_template" translate="label" type="textarea" sortOrder="10" showInDefault="1"
+                       showInWebsite="1" showInStore="0" canRestore="1">
+                    <label>Telegram Template Text</label>
+                    <validate>required-entry</validate>
+                    <comment>Hi {customer_name}, you order({incrementId}) updated to {status} status.</comment>
+                </field>
+                <field id="telegram_items_template" translate="label" type="textarea" sortOrder="10" showInDefault="1"
+                       showInWebsite="1" showInStore="0" canRestore="1">
+                    <label>Telegram Template Text</label>
+                    <validate>required-entry</validate>
+                    <comment>Items: Name: {name},Price: {price}</comment>
                 </field>
             </group>
         </section>
