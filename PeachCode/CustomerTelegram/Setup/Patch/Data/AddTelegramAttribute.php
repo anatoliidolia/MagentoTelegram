@@ -1,41 +1,23 @@
 <?php
-/**
- * Copyright ©  All rights reserved.
- * See COPYING.txt for license details.
- */
 declare(strict_types=1);
 
 namespace PeachCode\CustomerTelegram\Setup\Patch\Data;
 
 use Magento\Customer\Model\Customer;
-use Magento\Customer\Setup\CustomerSetup;
 use Magento\Customer\Setup\CustomerSetupFactory;
-use Magento\Eav\Model\Entity\Attribute\Set;
+use PeachCode\CustomerTelegram\Api\ConfigInterface;
 use Magento\Eav\Model\Entity\Attribute\SetFactory;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Setup\ModuleDataSetupInterface;
 use Magento\Framework\Setup\Patch\DataPatchInterface;
 use Magento\Framework\Setup\Patch\PatchRevertableInterface;
+use Magento\Framework\Validator\ValidateException;
 
 /**
  * Patch for Create attribute
  */
 class AddTelegramAttribute implements DataPatchInterface, PatchRevertableInterface
 {
-
-    /**
-     * @var ModuleDataSetupInterface
-     */
-    private $moduleDataSetup;
-    /**
-     * @var CustomerSetup
-     */
-    private $customerSetupFactory;
-    /**
-     * @var SetFactory
-     */
-    private $attributeSetFactory;
-
     /**
      * Constructor
      *
@@ -44,34 +26,29 @@ class AddTelegramAttribute implements DataPatchInterface, PatchRevertableInterfa
      * @param SetFactory $attributeSetFactory
      */
     public function __construct(
-        ModuleDataSetupInterface $moduleDataSetup,
-        CustomerSetupFactory $customerSetupFactory,
-        SetFactory $attributeSetFactory
-    ) {
-        $this->moduleDataSetup = $moduleDataSetup;
-        $this->customerSetupFactory = $customerSetupFactory;
-        $this->attributeSetFactory = $attributeSetFactory;
-    }
+        private readonly ModuleDataSetupInterface $moduleDataSetup,
+        private readonly CustomerSetupFactory $customerSetupFactory,
+        private readonly SetFactory $attributeSetFactory
+    ) {}
 
     /**
-     * {@inheritdoc}
-     * @throws LocalizedException|\Zend_Validate_Exception
+     * @return void
+     * @throws LocalizedException
+     * @throws ValidateException
      */
-    public function apply()
+    public function apply(): void
     {
         $this->moduleDataSetup->getConnection()->startSetup();
-        /** @var CustomerSetup $customerSetup */
         $customerSetup = $this->customerSetupFactory->create(['setup' => $this->moduleDataSetup]);
         $customerEntity = $customerSetup->getEavConfig()->getEntityType(Customer::ENTITY);
         $attributeSetId = $customerEntity->getDefaultAttributeSetId();
 
-        /** @var Set $attributeSet */
         $attributeSet = $this->attributeSetFactory->create();
         $attributeGroupId = $attributeSet->getDefaultGroupId($attributeSetId);
 
         $customerSetup->addAttribute(
             Customer::ENTITY,
-            'telegram_chat_id',
+            ConfigInterface::XML_TELEGRAM_CHAT_ID,
             [
                 'label' => 'Customer Telegram Chat Id',
                 'input' => 'text',
@@ -88,7 +65,7 @@ class AddTelegramAttribute implements DataPatchInterface, PatchRevertableInterfa
             ]
         );
 
-        $attribute = $customerSetup->getEavConfig()->getAttribute(Customer::ENTITY, 'telegram_chat_id');
+        $attribute = $customerSetup->getEavConfig()->getAttribute(Customer::ENTITY, ConfigInterface::XML_TELEGRAM_CHAT_ID);
         $attribute->addData([
             'used_in_forms' => [
                 'adminhtml_customer',
@@ -108,12 +85,11 @@ class AddTelegramAttribute implements DataPatchInterface, PatchRevertableInterfa
     /**
      * @return void
      */
-    public function revert()
+    public function revert(): void
     {
         $this->moduleDataSetup->getConnection()->startSetup();
-        /** @var CustomerSetup $customerSetup */
         $customerSetup = $this->customerSetupFactory->create(['setup' => $this->moduleDataSetup]);
-        $customerSetup->removeAttribute(Customer::ENTITY, 'telegram_chat_id');
+        $customerSetup->removeAttribute(Customer::ENTITY, ConfigInterface::XML_TELEGRAM_CHAT_ID);
 
         $this->moduleDataSetup->getConnection()->endSetup();
     }
@@ -121,7 +97,7 @@ class AddTelegramAttribute implements DataPatchInterface, PatchRevertableInterfa
     /**
      * {@inheritdoc}
      */
-    public function getAliases()
+    public function getAliases(): array
     {
         return [];
     }
@@ -129,7 +105,7 @@ class AddTelegramAttribute implements DataPatchInterface, PatchRevertableInterfa
     /**
      * {@inheritdoc}
      */
-    public static function getDependencies()
+    public static function getDependencies(): array
     {
         return [
 

@@ -1,10 +1,4 @@
 <?php
-/**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
- */
-
-// @codingStandardsIgnoreFile
 
 /** @var \Magento\Customer\Block\Form\Edit $block */
 ?>
@@ -28,13 +22,8 @@
         <?php endif ?>
 <!--        start telegram data -->
         <?php
-        $customsDocuments = get_class_methods($block->getCustomer()->getCustomAttribute('telegram_chat_id'));
-        if(isset($customsDocuments)){
-            $value= $block->getCustomer()->getCustomAttribute('telegram_chat_id')->getValue();
-        }
-        else {
-            $value = null;
-        }
+        $customsDocuments = $block->getCustomer()->getCustomAttribute('telegram_chat_id');
+        $value = $customsDocuments ? $customsDocuments->getValue() : null;
         ?>
         <div class="field choice">
             <label for="change-telegram_chat_id"  class="telegram_chat_id"><span><?= $block->escapeHtml(__('Telegram Chat Id')) ?></span></label>
@@ -110,7 +99,7 @@
     ], function($){
         var dataForm = $('#form-validate');
         var ignore = <?= /* @noEscape */ $_dob->isEnabled() ? '\'input[id$="full"]\'' : 'null' ?>;
-        
+
         dataForm.mage('validation', {
         <?php if ($_dob->isEnabled()): ?>
             errorPlacement: function(error, element) {
