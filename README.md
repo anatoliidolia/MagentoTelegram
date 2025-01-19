@@ -14,11 +14,41 @@ Get Information about new order in telegram
 <li>The Telegram bot will send a message with your account info. 
 Scroll down and find “Chat.” Your chat ID number is listed below, next to “id.’</li>
 
-<b>How config module?</b><br>
-Admin-> Stores-> Configuration-> Sales-> Checkout-> <b>Telegram Integration</b>
+<h3>How config module?</h3><br>
+Admin-> Stores-> Configuration-> Telegram-> Admin Notification-> <b>Telegram Integration</b>
 <br>
 Insert <b>Access Token</b> & <b>Chat ID</b>
 <p>
+
+<h3>Feature</h3>
+Customize Telegram Messages from the Admin Panel
+
+You can modify the Telegram message text directly from the Magento admin panel.
+
+For example, the default template looks like this:
+Customer Name: {customer_name}, Product {name}, QTY: {quantity}, Price: {price}, Final Price: {final_price}
+
+This template can be customized to fit your needs by using the available variables:
+
+{customer_name} — the name of the customer
+{name} — the product name
+{quantity} — the product quantity
+{price} — the product price
+{final_price} — the total order amount
+Here’s how it looks in the interface:
+
+Example:
+If you set the following template:
+New order from {customer_name}. Items: {name} - QTY: {quantity}, Price: {price}. Total: {final_price}
+
+You will receive a message in Telegram like this:
+New order from John Doe. Items: Laptop - QTY: 2, Price: 1500. Total: 3000
+
+Simple and flexible!
+
+![img.png](PeachCode/AdminTelegram/img.png)
+
+
 First: You need to start the recently created chat<br>
 That's All!
 
@@ -32,4 +62,4 @@ All errors you can find in  var/log/system.log
  in app/code/PeachCode/Telegram/Observer/TelegramObserver.php on line 80 [] []
 </pre>
 <h3>Enjoy!</h3>
-<h6>Magento 2.3.2 Community</h6>
+<h6>Magento 2.4.7 Community</h6>
