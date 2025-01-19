@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+
+    <preference for="PeachCode\AdminTelegram\Api\ConfigInterface"
+                type="PeachCode\AdminTelegram\Model\Config\Data"/>
+
+    <preference for="PeachCode\AdminTelegram\Api\Resolver\DataSenderInterface"
+                type="PeachCode\AdminTelegram\Model\Resolver\DataSender"/>
+
+    <preference for="PeachCode\AdminTelegram\Api\Resolver\PrepareMessageInterface"
+                type="PeachCode\AdminTelegram\Model\Resolver\PrepareMessage"/>
+
+</config>

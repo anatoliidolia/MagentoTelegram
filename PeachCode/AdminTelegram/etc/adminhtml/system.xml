@@ -22,9 +22,15 @@
                     <validate>required-entry</validate>
                     <comment>Example: 5012344222:AREiD_eD1PR70akx6SYPFiVkMbi6sf5Orc4</comment>
                 </field>
+                <field id="telegram_template" translate="label" type="textarea" sortOrder="90" showInDefault="1"
+                       showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Telegram Template Text</label>
+                    <validate>required-entry</validate>
+                    <comment>Customer Name: {customer_name}, Product {name}, QTY: {quantity}, Price: {price}, Final Price {final_price}</comment>
+                </field>
                 <field id="telegram_chat_id" translate="label" type="text" sortOrder="20" showInDefault="1"
                        showInWebsite="1" showInStore="1" canRestore="1">
-                    <label>Telegram chat ID</label>
+                    <label>Telegram Chat ID</label>
                     <validate>required-entry</validate>
                     <comment>Example: 5012345678</comment>
                 </field>
